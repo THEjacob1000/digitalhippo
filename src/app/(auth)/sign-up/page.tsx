@@ -10,17 +10,12 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import {
+  AuthCredentialsValidator,
+  TAuthCredentialsValidator,
+} from "@/lib/validators/account-credentials-validator";
 
 const Page = () => {
-  const AuthCredentialsValidator = z.object({
-    email: z.string().email(),
-    password: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters long" }),
-  });
-
-  type TAuthCredentialsValidator = z.infer<typeof AuthCredentialsValidator>;
-
   const {
     register,
     handleSubmit,
@@ -28,6 +23,8 @@ const Page = () => {
   } = useForm<TAuthCredentialsValidator>({
     resolver: zodResolver(AuthCredentialsValidator),
   });
+
+  const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {};
 
   return (
     <>
@@ -49,7 +46,7 @@ const Page = () => {
           </div>
 
           <div className="grid gap-6">
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid gap-2">
                 <div className="grid gap-1 py-2">
                   <Label htmlFor="email">Email</Label>
