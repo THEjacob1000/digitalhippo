@@ -18,8 +18,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { ZodError } from "zod";
 
-const router = useRouter();
-
 const Page = () => {
   const {
     register,
@@ -28,6 +26,8 @@ const Page = () => {
   } = useForm<TAuthCredentialsValidator>({
     resolver: zodResolver(AuthCredentialsValidator),
   });
+
+  const router = useRouter();
 
   const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({
     onError: (error) => {
