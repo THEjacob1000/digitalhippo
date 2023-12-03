@@ -7,6 +7,7 @@ import Cart from "./Cart";
 import { getServerSideUser } from "@/lib/payload-utils";
 import { cookies } from "next/headers";
 import UserAccountNav from "./UserAccountNav";
+import MobileNav from "./MobileNav";
 
 const Navbar = async () => {
   const nextCookies = cookies();
@@ -17,19 +18,18 @@ const Navbar = async () => {
       <header className="relative bg-white">
         <MaxWidthWrapper>
           <div className="border-b border-gray-200">
-            <div className="flex h-16 items-center">
-              {/* TODO: Mobile nav */}
-
-              <div className="ml-4 flex lg:ml-0">
+            <div className="flex h-16 items-center justify-between">
+              <div className="flex items-center">
                 <Link href="/">
                   <Icons.logo className="w-10 h-10" />
                 </Link>
+                <div className="hidden z-50 md:ml-8 md:block md:self-stretch">
+                  <NavItems />
+                </div>
               </div>
-              <div className="hidden z-50 lg:ml-8 lg:block lg:self-stretch">
-                <NavItems />
-              </div>
-              <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+
+              <div className="flex items-center">
+                <div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:space-x-3 lg:space-x-6">
                   {user ? null : (
                     <Link
                       href="/sign-in"
@@ -55,7 +55,7 @@ const Navbar = async () => {
                     <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   ) : null}
                   {user ? null : (
-                    <div className="flex lg:ml-6">
+                    <div className="flex md:ml-6">
                       <span
                         className="h-6 w-px bg-gray-200"
                         aria-hidden="true"
@@ -66,6 +66,7 @@ const Navbar = async () => {
                     <Cart />
                   </div>
                 </div>
+                <MobileNav />
               </div>
             </div>
           </div>
