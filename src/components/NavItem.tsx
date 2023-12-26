@@ -16,7 +16,12 @@ interface NavItemProps {
   isAnyOpen: boolean;
 }
 
-const NavItem = ({ category, handleOpen, isOpen, isAnyOpen }: NavItemProps) => {
+const NavItem = ({
+  category,
+  handleOpen,
+  isOpen,
+  isAnyOpen,
+}: NavItemProps) => {
   return (
     <div className="flex">
       <div className="relative flex items-center">
@@ -27,9 +32,12 @@ const NavItem = ({ category, handleOpen, isOpen, isAnyOpen }: NavItemProps) => {
         >
           {category.label}
           <ChevronDown
-            className={cn("h-4 w-4 transition-all text-muted-foreground", {
-              "-rotate-180": isOpen,
-            })}
+            className={cn(
+              "h-4 w-4 transition-all text-muted-foreground",
+              {
+                "-rotate-180": isOpen,
+              }
+            )}
           />
         </Button>
       </div>
