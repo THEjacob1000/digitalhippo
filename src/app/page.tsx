@@ -19,7 +19,8 @@ const perks = [
   {
     name: "For the Planet",
     Icon: Leaf,
-    description: "We've pledge 1% of sales to the preservation of our planet",
+    description:
+      "We've pledge 1% of sales to the preservation of our planet",
   },
 ];
 
@@ -33,20 +34,23 @@ export default function Home() {
             <span className="text-green-600">digital assets</span>.
           </h1>
           <p className="mt-6 text-lg max-w-prose text-muted-foreground">
-            Welcome to DigitalHippo. Every asset on our platform is verified by
-            our team to ensure our highest quality standards
+            Welcome to DigitalHippo. Every asset on our platform is
+            verified by our team to ensure our highest quality
+            standards
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-6">
             <Link href="/products" className={buttonVariants()}>
               Browse Trending
             </Link>
-            <Button variant="ghost">Our Quality Promise &rarr;</Button>
+            <Button variant="ghost">
+              Our Quality Promise &rarr;
+            </Button>
           </div>
         </div>
         <ProductReel
           query={{ sort: "desc", limit: 4 }}
           title="Brand new"
-          href="/product"
+          href="/products"
         />
       </MaxWidthWrapper>
 
