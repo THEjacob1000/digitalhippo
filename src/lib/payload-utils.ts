@@ -4,7 +4,7 @@ import { NextRequest } from "next/server";
 
 export const getServerSideUser = async (
   cookies: NextRequest["cookies"] | ReadonlyRequestCookies
-) => {
+): Promise<{ user: User | null }> => {
   const token = cookies.get("payload-token")?.value;
   const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/me`;
 
@@ -22,7 +22,7 @@ export const getServerSideUser = async (
 
     if (!meRes.ok) {
       console.error("Failed to fetch user:", text);
-      throw new Error(`Failed to fetch user: ${meRes.statusText}`);
+      return { user: null };
     }
 
     try {
@@ -30,14 +30,10 @@ export const getServerSideUser = async (
       return { user };
     } catch (jsonError) {
       console.error("Failed to parse JSON:", text);
-      if (jsonError instanceof Error) {
-        throw new Error(`Failed to parse JSON: ${jsonError.message}`);
-      }
+      return { user: null };
     }
   } catch (error) {
     console.error("Error in getServerSideUser:", error);
-    if (error instanceof Error) {
-      throw new Error(`Error in getServerSideUser: ${error.message}`);
-    }
+    return { user: null };
   }
 };
