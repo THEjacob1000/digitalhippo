@@ -11,7 +11,7 @@ import MobileNav from "./MobileNav";
 
 const Navbar = async () => {
   const nextCookies = cookies();
-  const { user } = await getServerSideUser(nextCookies);
+  const { user } = (await getServerSideUser(nextCookies)) ?? {};
 
   return (
     <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
@@ -39,7 +39,10 @@ const Navbar = async () => {
                     </Link>
                   )}
                   {user ? null : (
-                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                    <span
+                      className="h-6 w-px bg-gray-200"
+                      aria-hidden="true"
+                    />
                   )}
                   {user ? (
                     <UserAccountNav user={user} />
@@ -52,7 +55,10 @@ const Navbar = async () => {
                     </Link>
                   )}
                   {user ? (
-                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                    <span
+                      className="h-6 w-px bg-gray-200"
+                      aria-hidden="true"
+                    />
                   ) : null}
                   {user ? null : (
                     <div className="flex md:ml-6">

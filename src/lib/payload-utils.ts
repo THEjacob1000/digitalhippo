@@ -6,14 +6,38 @@ export const getServerSideUser = async (
   cookies: NextRequest["cookies"] | ReadonlyRequestCookies
 ) => {
   const token = cookies.get("payload-token")?.value;
-  const meRes = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/me`,
-    {
+  const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/me`;
+
+  console.log(`Fetching user from: ${url}`);
+  console.log(`Using token: ${token}`);
+
+  try {
+    const meRes = await fetch(url, {
       headers: {
         Authorization: `JWT ${token}`,
       },
+    });
+
+    const text = await meRes.text();
+
+    if (!meRes.ok) {
+      console.error("Failed to fetch user:", text);
+      throw new Error(`Failed to fetch user: ${meRes.statusText}`);
     }
-  );
-  const { user } = (await meRes.json()) as { user: User | null };
-  return { user };
+
+    try {
+      const { user } = JSON.parse(text) as { user: User | null };
+      return { user };
+    } catch (jsonError) {
+      console.error("Failed to parse JSON:", text);
+      if (jsonError instanceof Error) {
+        throw new Error(`Failed to parse JSON: ${jsonError.message}`);
+      }
+    }
+  } catch (error) {
+    console.error("Error in getServerSideUser:", error);
+    if (error instanceof Error) {
+      throw new Error(`Error in getServerSideUser: ${error.message}`);
+    }
+  }
 };
